@@ -1,0 +1,64 @@
+# =========================
+# Operating System
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Node / React / Vite
+# =========================
+node_modules/
+dist/
+coverage/
+*.log
+npm-debug.log*
+
+# =========================
+# Java / Maven / Spring Boot
+# =========================
+target/
+*.class
+*.jar
+*.war
+
+# =========================
+# IntelliJ / Eclipse
+# =========================
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Secrets / Credentials
+# =========================
+*.key
+*.pem
+*.p12
+*.jks
+
+# =========================
+# H2 Database Files
+# =========================
+*.mv.db
+*.trace.db
+
+# =========================
+# Temporary Files
+# =========================
+tmp/
+temp/
+*.tmp
