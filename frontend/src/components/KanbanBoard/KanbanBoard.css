@@ -49,6 +49,36 @@
   text-transform: uppercase;
 }
 
+.board-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.create-work-item-button {
+  border: 1px solid #24464d;
+  border-radius: 4px;
+  padding: 10px 15px;
+  background: #24464d;
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.create-work-item-button:hover {
+  background: #173b42;
+}
+
+.create-work-item-button:focus-visible,
+.form-close:focus-visible,
+.form-secondary-action:focus-visible,
+.form-primary-action:focus-visible {
+  outline: 2px solid #54747a;
+  outline-offset: 2px;
+}
+
 .board-columns {
   display: grid;
   grid-template-columns: repeat(5, minmax(190px, 1fr));
@@ -74,6 +104,11 @@
   .board-header {
     display: block;
     margin-bottom: 28px;
+  }
+
+  .board-header-actions {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .board-header h1 {
