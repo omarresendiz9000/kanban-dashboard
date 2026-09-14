@@ -1,14 +1,19 @@
+import { sampleWorkItems } from '../../data/sampleWorkItems'
+import type { WorkflowStatus } from '../../types/workItem'
 import KanbanColumn from '../KanbanColumn/KanbanColumn'
 import './KanbanBoard.css'
 
-type WorkflowColumn = 'Backlog' | 'Ready' | 'In Progress' | 'Review' | 'Done'
+interface WorkflowColumn {
+  status: WorkflowStatus
+  title: string
+}
 
 const workflowColumns: readonly WorkflowColumn[] = [
-  'Backlog',
-  'Ready',
-  'In Progress',
-  'Review',
-  'Done',
+  { status: 'backlog', title: 'Backlog' },
+  { status: 'ready', title: 'Ready' },
+  { status: 'in-progress', title: 'In Progress' },
+  { status: 'review', title: 'Review' },
+  { status: 'done', title: 'Done' },
 ]
 
 function KanbanBoard() {
@@ -26,8 +31,14 @@ function KanbanBoard() {
       </header>
 
       <section className="board-columns" aria-label="Kanban workflow columns">
-        {workflowColumns.map((title) => (
-          <KanbanColumn key={title} title={title} />
+        {workflowColumns.map((column) => (
+          <KanbanColumn
+            key={column.status}
+            title={column.title}
+            workItems={sampleWorkItems.filter(
+              (workItem) => workItem.status === column.status,
+            )}
+          />
         ))}
       </section>
     </main>
