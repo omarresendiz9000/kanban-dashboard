@@ -5,9 +5,10 @@ import './KanbanColumn.css'
 interface KanbanColumnProps {
   title: string
   workItems: readonly WorkItem[]
+  onEdit: (workItem: WorkItem) => void
 }
 
-function KanbanColumn({ title, workItems }: KanbanColumnProps) {
+function KanbanColumn({ title, workItems, onEdit }: KanbanColumnProps) {
   return (
     <article className="kanban-column">
       <header className="column-header">
@@ -22,7 +23,11 @@ function KanbanColumn({ title, workItems }: KanbanColumnProps) {
       <div className="column-content">
         {workItems.length > 0 ? (
           workItems.map((workItem) => (
-            <WorkItemCard key={workItem.id} workItem={workItem} />
+            <WorkItemCard
+              key={workItem.id}
+              workItem={workItem}
+              onEdit={onEdit}
+            />
           ))
         ) : (
           <p>No work items</p>

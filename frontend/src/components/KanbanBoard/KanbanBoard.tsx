@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import CreateWorkItemForm from '../CreateWorkItemForm/CreateWorkItemForm'
+import EditWorkItemForm from '../EditWorkItemForm/EditWorkItemForm'
 import { sampleWorkItems } from '../../data/sampleWorkItems'
-import type { NewWorkItem, WorkItem, WorkflowStatus } from '../../types/workItem'
+import type {
+  WorkItem,
+  WorkItemInput,
+  WorkflowStatus,
+} from '../../types/workItem'
 import KanbanColumn from '../KanbanColumn/KanbanColumn'
 import './KanbanBoard.css'
 
@@ -24,7 +29,9 @@ function KanbanBoard() {
   )
   const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
 
-  const handleCreateWorkItem = (newWorkItem: NewWorkItem) => {
+  const [editingWorkItem, setEditingWorkItem] = useState<WorkItem | null>(null)
+
+  const handleCreateWorkItem = (newWorkItem: WorkItemInput) => {
     const id = `KAN-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
 
     setWorkItems((currentWorkItems) => [
@@ -32,6 +39,26 @@ function KanbanBoard() {
       { id, ...newWorkItem },
     ])
     setIsCreateFormVisible(false)
+  }
+
+  const handleEditWorkItem = (workItem: WorkItem) => {
+    setIsCreateFormVisible(false)
+    setEditingWorkItem(workItem)
+  }
+
+  const handleSaveWorkItem = (updatedWorkItem: WorkItemInput) => {
+    if (!editingWorkItem) {
+      return
+    }
+
+    setWorkItems((currentWorkItems) =>
+      currentWorkItems.map((workItem) =>
+        workItem.id === editingWorkItem.id
+          ? { id: workItem.id, ...updatedWorkItem }
+          : workItem,
+      ),
+    )
+    setEditingWorkItem(null)
   }
 
   return (
@@ -49,17 +76,28 @@ function KanbanBoard() {
           <button
             className="create-work-item-button"
             type="button"
-            onClick={() => setIsCreateFormVisible(true)}
+            onClick={() => {
+              setEditingWorkItem(null)
+              setIsCreateFormVisible(true)
+            }}
           >
             Create work item
           </button>
         </div>
       </header>
 
-      {isCreateFormVisible && (
+      {isCreateFormVisible && !editingWorkItem && (
         <CreateWorkItemForm
           onCreate={handleCreateWorkItem}
           onCancel={() => setIsCreateFormVisible(false)}
+        />
+      )}
+
+      {editingWorkItem && (
+        <EditWorkItemForm
+          workItem={editingWorkItem}
+          onSave={handleSaveWorkItem}
+          onCancel={() => setEditingWorkItem(null)}
         />
       )}
 
@@ -71,6 +109,7 @@ function KanbanBoard() {
             workItems={workItems.filter(
               (workItem) => workItem.status === column.status,
             )}
+              onEdit={handleEditWorkItem}
           />
         ))}
       </section>
