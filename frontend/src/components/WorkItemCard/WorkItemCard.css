@@ -75,8 +75,6 @@
 }
 
 .work-item-card__edit {
-  width: 100%;
-  margin-top: 16px;
   border: 1px solid #c9d8d9;
   border-radius: 4px;
   padding: 8px 10px;
@@ -95,5 +93,38 @@
 
 .work-item-card__edit:focus-visible {
   outline: 2px solid #54747a;
+  outline-offset: 2px;
+}
+
+.work-item-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.work-item-card__edit,
+.work-item-card__delete {
+  flex: 1;
+}
+
+.work-item-card__delete {
+  border: 1px solid #e4c8c4;
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: #fffaf9;
+  color: #b63f35;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.work-item-card__delete:hover {
+  border-color: #b63f35;
+  background: #fdf0ee;
+}
+
+.work-item-card__delete:focus-visible {
+  outline: 2px solid #b63f35;
   outline-offset: 2px;
 }

@@ -6,9 +6,10 @@ interface KanbanColumnProps {
   title: string
   workItems: readonly WorkItem[]
   onEdit: (workItem: WorkItem) => void
+  onDelete: (workItem: WorkItem) => void
 }
 
-function KanbanColumn({ title, workItems, onEdit }: KanbanColumnProps) {
+function KanbanColumn({ title, workItems, onEdit, onDelete }: KanbanColumnProps) {
   return (
     <article className="kanban-column">
       <header className="column-header">
@@ -27,6 +28,7 @@ function KanbanColumn({ title, workItems, onEdit }: KanbanColumnProps) {
               key={workItem.id}
               workItem={workItem}
               onEdit={onEdit}
+              onDelete={onDelete}
             />
           ))
         ) : (

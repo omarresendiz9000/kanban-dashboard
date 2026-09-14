@@ -4,9 +4,10 @@ import './WorkItemCard.css'
 interface WorkItemCardProps {
   workItem: WorkItem
   onEdit: (workItem: WorkItem) => void
+  onDelete: (workItem: WorkItem) => void
 }
 
-function WorkItemCard({ workItem, onEdit }: WorkItemCardProps) {
+function WorkItemCard({ workItem, onEdit, onDelete }: WorkItemCardProps) {
   return (
     <article className="work-item-card">
       <div className="work-item-card__meta">
@@ -20,13 +21,22 @@ function WorkItemCard({ workItem, onEdit }: WorkItemCardProps) {
         <span>Assignee</span>
         {workItem.assignee}
       </p>
-      <button
-        className="work-item-card__edit"
-        type="button"
-        onClick={() => onEdit(workItem)}
-      >
-        Edit
-      </button>
+      <div className="work-item-card__actions">
+        <button
+          className="work-item-card__edit"
+          type="button"
+          onClick={() => onEdit(workItem)}
+        >
+          Edit
+        </button>
+        <button
+          className="work-item-card__delete"
+          type="button"
+          onClick={() => onDelete(workItem)}
+        >
+          Delete
+        </button>
+      </div>
     </article>
   )
 }

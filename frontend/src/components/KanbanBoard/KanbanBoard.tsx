@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CreateWorkItemForm from '../CreateWorkItemForm/CreateWorkItemForm'
+import DeleteWorkItemConfirmation from '../DeleteWorkItemConfirmation/DeleteWorkItemConfirmation'
 import EditWorkItemForm from '../EditWorkItemForm/EditWorkItemForm'
 import { sampleWorkItems } from '../../data/sampleWorkItems'
 import type {
@@ -30,6 +31,7 @@ function KanbanBoard() {
   const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
 
   const [editingWorkItem, setEditingWorkItem] = useState<WorkItem | null>(null)
+  const [pendingDeletion, setPendingDeletion] = useState<WorkItem | null>(null)
 
   const handleCreateWorkItem = (newWorkItem: WorkItemInput) => {
     const id = `KAN-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
@@ -43,6 +45,7 @@ function KanbanBoard() {
 
   const handleEditWorkItem = (workItem: WorkItem) => {
     setIsCreateFormVisible(false)
+    setPendingDeletion(null)
     setEditingWorkItem(workItem)
   }
 
@@ -59,6 +62,25 @@ function KanbanBoard() {
       ),
     )
     setEditingWorkItem(null)
+  }
+
+  const handleDeleteWorkItem = (workItem: WorkItem) => {
+    setIsCreateFormVisible(false)
+    setEditingWorkItem(null)
+    setPendingDeletion(workItem)
+  }
+
+  const handleConfirmDelete = () => {
+    if (!pendingDeletion) {
+      return
+    }
+
+    setWorkItems((currentWorkItems) =>
+      currentWorkItems.filter(
+        (workItem) => workItem.id !== pendingDeletion.id,
+      ),
+    )
+    setPendingDeletion(null)
   }
 
   return (
@@ -78,6 +100,7 @@ function KanbanBoard() {
             type="button"
             onClick={() => {
               setEditingWorkItem(null)
+              setPendingDeletion(null)
               setIsCreateFormVisible(true)
             }}
           >
@@ -101,6 +124,14 @@ function KanbanBoard() {
         />
       )}
 
+      {pendingDeletion && (
+        <DeleteWorkItemConfirmation
+          workItem={pendingDeletion}
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setPendingDeletion(null)}
+        />
+      )}
+
       <section className="board-columns" aria-label="Kanban workflow columns">
         {workflowColumns.map((column) => (
           <KanbanColumn
@@ -109,7 +140,8 @@ function KanbanBoard() {
             workItems={workItems.filter(
               (workItem) => workItem.status === column.status,
             )}
-              onEdit={handleEditWorkItem}
+            onEdit={handleEditWorkItem}
+            onDelete={handleDeleteWorkItem}
           />
         ))}
       </section>

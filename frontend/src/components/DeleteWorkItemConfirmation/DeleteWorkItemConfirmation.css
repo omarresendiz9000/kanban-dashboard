@@ -1,0 +1,84 @@
+.delete-confirmation-overlay {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(23, 59, 66, 0.24);
+}
+
+.delete-confirmation {
+  width: min(100%, 440px);
+  padding: 28px;
+  border: 1px solid #e4c8c4;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgba(35, 64, 68, 0.2);
+}
+
+.delete-confirmation__eyebrow {
+  margin: 0 0 8px;
+  color: #b63f35;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.delete-confirmation h2 {
+  margin: 0 0 12px;
+  color: #173b42;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+}
+
+.delete-confirmation > p:not(.delete-confirmation__eyebrow):not(.delete-confirmation__item-title) {
+  margin: 0;
+  color: #52686c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.delete-confirmation__item-title {
+  margin: 16px 0 24px;
+  padding: 12px;
+  border-left: 3px solid #b63f35;
+  background: #fdf5f3;
+  color: #71362f;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.delete-confirmation__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.delete-confirmation__cancel,
+.delete-confirmation__confirm {
+  border-radius: 4px;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-confirmation__cancel {
+  border: 1px solid #c9d8d9;
+  background: #ffffff;
+  color: #54747a;
+}
+
+.delete-confirmation__confirm {
+  border: 1px solid #b63f35;
+  background: #b63f35;
+  color: #ffffff;
+}
+
+.delete-confirmation__cancel:focus-visible,
+.delete-confirmation__confirm:focus-visible {
+  outline: 2px solid #54747a;
+  outline-offset: 2px;
+}
