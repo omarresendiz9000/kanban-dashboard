@@ -1,13 +1,15 @@
 import { useState, type FormEvent } from 'react'
 import type {
   Priority,
+  WorkItem,
   WorkItemInput,
   WorkflowStatus,
 } from '../../types/workItem'
-import './CreateWorkItemForm.css'
+import './EditWorkItemForm.css'
 
-interface CreateWorkItemFormProps {
-  onCreate: (workItem: WorkItemInput) => void
+interface EditWorkItemFormProps {
+  workItem: WorkItem
+  onSave: (workItem: WorkItemInput) => void
   onCancel: () => void
 }
 
@@ -34,19 +36,18 @@ const statusOptions: readonly { value: WorkflowStatus; label: string }[] = [
   { value: 'done', label: 'Done' },
 ]
 
-const initialFormValues: FormValues = {
-  title: '',
-  description: '',
-  priority: '',
-  assignee: '',
-  status: '',
-}
-
-function CreateWorkItemForm({
-  onCreate,
+function EditWorkItemForm({
+  workItem,
+  onSave,
   onCancel,
-}: CreateWorkItemFormProps) {
-  const [formValues, setFormValues] = useState<FormValues>(initialFormValues)
+}: EditWorkItemFormProps) {
+  const [formValues, setFormValues] = useState<FormValues>({
+    title: workItem.title,
+    description: workItem.description ?? '',
+    priority: workItem.priority,
+    assignee: workItem.assignee,
+    status: workItem.status,
+  })
   const [error, setError] = useState('')
 
   const updateField = <Field extends keyof FormValues>(
@@ -73,7 +74,7 @@ function CreateWorkItemForm({
       return
     }
 
-    onCreate({
+    onSave({
       title: formValues.title.trim(),
       description: formValues.description.trim() || undefined,
       priority: formValues.priority,
@@ -83,11 +84,11 @@ function CreateWorkItemForm({
   }
 
   return (
-    <form className="create-work-item-form" onSubmit={handleSubmit} noValidate>
+    <form className="edit-work-item-form" onSubmit={handleSubmit} noValidate>
       <div className="form-header">
         <div>
-          <p className="form-eyebrow">NEW WORK ITEM</p>
-          <h2>Create work item</h2>
+          <p className="form-eyebrow">EDIT WORK ITEM</p>
+          <h2>{workItem.id}</h2>
         </div>
         <button className="form-close" type="button" onClick={onCancel}>
           Cancel
@@ -100,7 +101,6 @@ function CreateWorkItemForm({
           <input
             value={formValues.title}
             onChange={(event) => updateField('title', event.target.value)}
-            placeholder="Enter a work item title"
           />
         </label>
 
@@ -111,7 +111,6 @@ function CreateWorkItemForm({
             onChange={(event) =>
               updateField('description', event.target.value)
             }
-            placeholder="Add context for the team"
             rows={3}
           />
         </label>
@@ -138,7 +137,6 @@ function CreateWorkItemForm({
           <input
             value={formValues.assignee}
             onChange={(event) => updateField('assignee', event.target.value)}
-            placeholder="Enter an assignee"
           />
         </label>
 
@@ -160,18 +158,22 @@ function CreateWorkItemForm({
         </label>
       </div>
 
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
 
       <div className="form-actions">
         <button className="form-secondary-action" type="button" onClick={onCancel}>
           Cancel
         </button>
         <button className="form-primary-action" type="submit">
-          Save work item
+          Save changes
         </button>
       </div>
     </form>
   )
 }
 
-export default CreateWorkItemForm
+export default EditWorkItemForm

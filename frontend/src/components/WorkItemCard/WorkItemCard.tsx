@@ -3,9 +3,10 @@ import './WorkItemCard.css'
 
 interface WorkItemCardProps {
   workItem: WorkItem
+  onEdit: (workItem: WorkItem) => void
 }
 
-function WorkItemCard({ workItem }: WorkItemCardProps) {
+function WorkItemCard({ workItem, onEdit }: WorkItemCardProps) {
   return (
     <article className="work-item-card">
       <div className="work-item-card__meta">
@@ -19,6 +20,13 @@ function WorkItemCard({ workItem }: WorkItemCardProps) {
         <span>Assignee</span>
         {workItem.assignee}
       </p>
+      <button
+        className="work-item-card__edit"
+        type="button"
+        onClick={() => onEdit(workItem)}
+      >
+        Edit
+      </button>
     </article>
   )
 }

@@ -16,4 +16,4 @@ export interface WorkItem {
   assignee: string
 }
 
-export type NewWorkItem = Omit<WorkItem, 'id'>
+export type WorkItemInput = Omit<WorkItem, 'id'>

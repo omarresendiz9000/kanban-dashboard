@@ -73,3 +73,27 @@
   letter-spacing: 0.7px;
   text-transform: uppercase;
 }
+
+.work-item-card__edit {
+  width: 100%;
+  margin-top: 16px;
+  border: 1px solid #c9d8d9;
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: #f7faf9;
+  color: #54747a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.work-item-card__edit:hover {
+  border-color: #54747a;
+  background: #edf3f3;
+}
+
+.work-item-card__edit:focus-visible {
+  outline: 2px solid #54747a;
+  outline-offset: 2px;
+}
