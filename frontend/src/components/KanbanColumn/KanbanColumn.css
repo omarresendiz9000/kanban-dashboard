@@ -38,14 +38,16 @@
 }
 
 .column-content {
-  display: grid;
+  display: flex;
   min-height: 310px;
-  place-items: center;
+  flex-direction: column;
+  gap: 12px;
   padding: 24px;
 }
 
 .column-content p {
-  margin: 0;
+  align-self: center;
+  margin: auto 0;
   color: #9aa9ab;
   font-size: 13px;
 }
